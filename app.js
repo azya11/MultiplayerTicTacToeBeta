@@ -48,9 +48,55 @@ function updateFriendStatuses(user) {
         }
     });
 }
-
+let rooms = {};  // roomCode => [player1Socket, player2Socket]
 io.on('connection', (socket) => {
     console.log(`Client connected: ${socket.id}`);
+    // ==== GAME ROOM LOGIC ====
+
+    
+
+    socket.on('create_room', () => {
+        const roomCode = Math.random().toString(36).substring(2, 8);
+        rooms[roomCode] = [socket];
+        socket.join(roomCode);
+        socket.emit('room_created', { roomCode });
+    });
+
+    socket.on('join_room', ({ roomCode }) => {
+        if (rooms[roomCode] && rooms[roomCode].length === 1) {
+            const player1 = rooms[roomCode][0];
+            const player2 = socket;
+
+            rooms[roomCode].push(player2);
+            socket.join(roomCode);
+
+            io.to(roomCode).emit('start', {
+                room: roomCode,
+                players: [
+                    { id: player1.id, name: nicknames[player1.id] || "Player 1" },
+                    { id: player2.id, name: nicknames[player2.id] || "Player 2" }
+                ]
+            });
+        } else {
+            socket.emit('join_error', { message: 'Room not found or full.' });
+        }
+    });
+
+    socket.on('move', ({ room, board }) => {
+        socket.to(room).emit('update', board);
+    });
+
+    socket.on('restart', ({ room }) => {
+        io.to(room).emit('restart');
+    });
+
+
+    // ==== GLOBAL CHAT ====
+    socket.on('chat', ({ sender, message }) => {
+        if (sender && message?.trim()) {
+            io.emit('chat', { sender, message: message.trim() });
+        }
+    });
 
     socket.on('signup', ({ username, password }) => {
         const result = createUser(username, password);

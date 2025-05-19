@@ -45,11 +45,12 @@
         <div id="status">Waiting for opponent...</div>
         <div id="board" class="grid"></div>
         <button onclick="restartGame()">Restart</button>
-
-        <h2>Global Chat</h2>
-        <ul id="chatMessages" style="list-style: none; padding: 0;"></ul>
-        <input type="text" id="chatInput" placeholder="Type a message" disabled>
+        <ul id="chatMessages" style="list-style:none;"></ul>
+        <input type="text" id="chatInput" placeholder="Type message" disabled>
         <button onclick="sendChat()" id="chatButton" disabled>Send</button>
+
+        <div id="status">Waiting for opponent...</div>
+        <div id="board" class="grid"></div>
     </div>
 
     <script src="/socket.io/socket.io.js"></script>
