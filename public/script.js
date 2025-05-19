@@ -38,18 +38,16 @@ function signup() {
     socket.emit('signup', { username, password });
 }
 function logout() {
+    socket.emit('manual_logout');
     nickname = '';
     isLoggedIn = false;
-    clearCookie('username');
-    clearCookie('password');
-    localStorage.removeItem('username');
+
     document.getElementById('auth').style.display = 'block';
-    document.getElementById('players').style.display = 'none';
     document.getElementById('logoutButton').style.display = 'none';
-    document.getElementById('chatInput').disabled = true;
-    document.getElementById('chatButton').disabled = true;
-    alert("You have been logged out.");
+    document.getElementById('friendList').innerHTML = '';
+    document.getElementById('requestList').innerHTML = '';
 }
+
 
 // === Game Setup ===
 function createRoom() {
@@ -199,12 +197,19 @@ socket.on('friend_list_update', ({ friends }) => {
     });
 });
 socket.on('friend_status_update', ({ friend, isOnline }) => {
-    const status = document.getElementById(`status-${friend}`);
-    if (status) {
-        status.textContent = isOnline ? "(online)" : "(offline)";
-        status.style.color = isOnline ? "limegreen" : "red";
+    const statusSpan = document.getElementById(`status-${friend}`);
+    if (statusSpan) {
+        statusSpan.textContent = isOnline ? "(online)" : "(offline)";
+        statusSpan.style.color = isOnline ? "green" : "red";
     }
 });
+
+setInterval(() => {
+    if (nickname && isLoggedIn) {
+        socket.emit('request_friend_status');
+    }
+}, 1000); // refresh every 1 second
+
 
 // === Auto login ===
 window.addEventListener('DOMContentLoaded', () => {

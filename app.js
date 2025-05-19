@@ -36,22 +36,31 @@ function findSocketByUsername(username) {
     return id ? io.sockets.sockets.get(id) : null;
 }
 
-function updateFriendStatuses(user) {
-    const userFriends = getFriends(user);
-    userFriends.forEach(friend => {
+function updateFriendStatuses(username) {
+    const friends = getFriends(username);
+
+    friends.forEach(friend => {
         const friendSocket = findSocketByUsername(friend);
         if (friendSocket) {
             friendSocket.emit('friend_status_update', {
-                friend: user,
-                isOnline: onlineUsers.has(user)
+                friend: username,
+                isOnline: onlineUsers.has(username)
             });
         }
     });
 }
+
 let rooms = {};  // roomCode => [player1Socket, player2Socket]
 io.on('connection', (socket) => {
     console.log(`Client connected: ${socket.id}`);
     // ==== GAME ROOM LOGIC ====
+    socket.on('manual_logout', () => {
+        const username = nicknames[socket.id];
+        if (username) {
+            onlineUsers.delete(username);
+            updateFriendStatuses(username);
+        }
+    });
 
     
 
@@ -158,6 +167,7 @@ io.on('connection', (socket) => {
             socket.emit('friend_status_update', { friend, isOnline });
         });
     });
+
 
     socket.on('disconnect', () => {
         const username = nicknames[socket.id];
