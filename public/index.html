@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Multiplayer Tic-Tac-Toe</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Top layout -->
+    <div class="top-bar">
+        <!-- Auth Section -->
+        <div id="auth-box" class="box">
+            <h3>Login / Signup</h3>
+            <div id="auth">
+                <input type="text" id="username" placeholder="Username">
+                <input type="password" id="password" placeholder="Password">
+                <button onclick="login()">Login</button>
+                <button onclick="signup()">Sign Up</button>
+            </div>
+            <button onclick="logout()" id="logoutButton" style="display: none;">Logout</button>
+        </div>
+
+        <!-- Friends Section -->
+        <div id="friends-box" class="box">
+            <h3>Friends</h3>
+            <input type="text" id="friendInput" placeholder="Friend username">
+            <button onclick="sendFriendRequest()">Add Friend</button>
+            <ul id="friendList"></ul>
+            <ul id="requestList"></ul>
+        </div>
+    </div>
+
+    <!-- Game & Chat Section -->
+    <div class="main-content">
+        <h1>Multiplayer Tic-Tac-Toe</h1>
+
+        <div id="players"></div>
+
+        <div>
+            <button onclick="createRoom()">Create Room</button>
+            <input type="text" id="roomCodeInput" placeholder="Enter Room Code">
+            <button onclick="joinRoom()">Join Room</button>
+        </div>
+
+        <div id="status">Waiting for opponent...</div>
+        <div id="board" class="grid"></div>
+        <button onclick="restartGame()">Restart</button>
+
+        <h2>Global Chat</h2>
+        <ul id="chatMessages" style="list-style: none; padding: 0;"></ul>
+        <input type="text" id="chatInput" placeholder="Type a message" disabled>
+        <button onclick="sendChat()" id="chatButton" disabled>Send</button>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,84 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background: #f0f0f0;
+}
+
+.top-bar {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 20px;
+}
+
+.box {
+    background: #fff;
+    padding: 12px;
+    border: 1px solid #ccc;
+    width: 260px;
+    min-height: 150px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.main-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+
+h1, h2, h3 {
+    margin: 10px 0;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3, 100px);
+    gap: 5px;
+    margin: 20px 0;
+}
+
+.cell {
+    width: 100px;
+    height: 100px;
+    background: #eee;
+    font-size: 2.5em;
+    text-align: center;
+    line-height: 100px;
+    cursor: pointer;
+    border: 2px solid #333;
+    user-select: none;
+}
+
+button {
+    margin: 5px 4px;
+    padding: 6px 12px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+#status, #players {
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+#chatMessages {
+    max-height: 200px;
+    overflow-y: auto;
+    width: 300px;
+    padding-left: 10px;
+    border: 1px solid #ccc;
+    background: #fff;
+    margin: 10px 0;
+}
+
+#chatInput {
+    width: 200px;
+    padding: 5px;
+}
+
+ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
