@@ -46,10 +46,13 @@
             <button onclick="joinRoom()">Join Room</button>
         </div>
 
-        <div id="status">Waiting for opponent...</div>
+        <div id="status" style="display:none;">Waiting for opponent...</div>
         <div id="board" class="grid"></div>
-        <div id="timer" style="font-weight: bold; font-size: 1.2em; margin: 10px;">Timer: --</div>
-        <button onclick="restartGame()">Restart</button>
+        <div id="timerContainer" style="display:none;">
+            <div id="timer" style="font-weight: bold; font-size: 1.2em; margin: 10px;">Timer: --</div>
+            <button onclick="restartGame()">Restart</button>
+        </div>
+        
     </div>
 
     <script src="/socket.io/socket.io.js"></script>

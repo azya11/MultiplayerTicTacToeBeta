@@ -191,6 +191,8 @@ socket.on('start', ({ room: r, players }) => {
     render();
     const playerNames = `${players[0].name} (X) vs ${players[1].name} (O)`;
     document.getElementById('players').textContent = playerNames;
+    document.getElementById('status').style.display = 'none';
+    document.getElementById('timerContainer').style.display = 'block';
     alert(`Game started! You are ${mySymbol}`);
 });
 socket.on('update', updatedBoard => {
@@ -204,8 +206,13 @@ socket.on('restart', () => {
     myTurn = mySymbol === 'X';
     render();
 });
-socket.on('room_created', ({ roomCode }) => alert('Room created! Share this code: ' + roomCode));
+socket.on('room_created', ({ roomCode }) => {
+    alert('Room created! Share this code: ' + roomCode);
+    document.getElementById('status').style.display = 'block';
+});
+
 socket.on('join_error', ({ message }) => alert('Join failed: ' + message));
+
 socket.on('chat', ({ sender, message }) => {
     const list = document.getElementById('chatMessages');
     const item = document.createElement('li');
