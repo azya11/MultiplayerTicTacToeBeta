@@ -5,7 +5,10 @@ let myTurn = false;
 let mySymbol = '';
 let board = Array(9).fill(null);
 let isLoggedIn = false;
-
+let timer = null;
+let timeLeft = 30; // seconds
+const timerDisplay = document.getElementById('timer');
+const statusDiv = document.getElementById('status');
 // === Cookie Helpers ===
 function setCookie(name, value, days = 1) {
     const d = new Date();
@@ -60,6 +63,9 @@ function joinRoom() {
 function render() {
     const boardDiv = document.getElementById('board');
     boardDiv.innerHTML = '';
+    if (myTurn) startTurnTimer();
+    else stopTurnTimer();
+
     board.forEach((cell, i) => {
         const div = document.createElement('div');
         div.textContent = cell || '';
@@ -76,6 +82,8 @@ function render() {
         boardDiv.appendChild(div);
     });
     updateStatus();
+    
+
 }
 function checkWinner() {
     const lines = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]];
@@ -94,6 +102,7 @@ function checkGameStatus() {
         statusDiv.textContent = `Draw!`;
         myTurn = false;
     }
+    stopTurnTimer();
 }
 function updateStatus() {
     const statusDiv = document.getElementById('status');
@@ -108,7 +117,30 @@ function restartGame() {
     myTurn = mySymbol === 'X';
     socket.emit('restart', { room });
     render();
+    stopTurnTimer();
 }
+
+function startTurnTimer() {
+    clearInterval(timer);
+    timeLeft = 30;
+    timerDisplay.textContent = `Timer: ${timeLeft}s`;
+
+    timer = setInterval(() => {
+        timeLeft--;
+        timerDisplay.textContent = `Timer: ${timeLeft}s`;
+
+        if (timeLeft <= 0) {
+            clearInterval(timer);
+            socket.emit('timeout', { room });
+        }
+    }, 1000);
+}
+
+function stopTurnTimer() {
+    clearInterval(timer);
+    timerDisplay.textContent = `Timer: --`;
+}
+
 
 // === Chat ===
 function sendChat() {
@@ -163,9 +195,9 @@ socket.on('start', ({ room: r, players }) => {
 });
 socket.on('update', updatedBoard => {
     board = updatedBoard;
-    myTurn = true;
-    render();
+    myTurn = true
     checkGameStatus();
+    render();
 });
 socket.on('restart', () => {
     board = Array(9).fill(null);
@@ -203,6 +235,19 @@ socket.on('friend_status_update', ({ friend, isOnline }) => {
         statusSpan.style.color = isOnline ? "green" : "red";
     }
 });
+
+socket.on('timeout_win', () => {
+    stopTurnTimer();
+    statusDiv.textContent = 'Opponent ran out of time. You win!';
+    myTurn = false;
+});
+
+socket.on('timeout_lose', () => {
+    stopTurnTimer();
+    statusDiv.textContent = 'You ran out of time. You lose!';
+    myTurn = false;
+});
+
 
 setInterval(() => {
     if (nickname && isLoggedIn) {

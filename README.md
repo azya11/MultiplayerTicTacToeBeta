@@ -1,6 +1,6 @@
 # MultiplayerTicTacToe
 Ideas:
-- Add a timer for each player
+- Add a timer for each player!
 - Add a DM for each player
 - Add a leaderboard
 - Add a lobby

@@ -62,6 +62,11 @@ io.on('connection', (socket) => {
         }
     });
 
+    socket.on('timeout', ({ room }) => {
+        socket.to(room).emit('timeout_win');
+        socket.emit('timeout_lose');
+    });
+
     
 
     socket.on('create_room', () => {
