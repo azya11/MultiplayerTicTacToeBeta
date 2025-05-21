@@ -27,6 +27,10 @@
             <button onclick="sendFriendRequest()">Add Friend</button>
             <ul id="friendList"></ul>
             <ul id="requestList"></ul>
+            <ul id="chatMessages" style="list-style:none;"></ul>
+            <h3>Global Chat</h3>
+            <input type="text" id="chatInput" placeholder="Type message" disabled>
+            <button onclick="sendChat()" id="chatButton" disabled>Send</button>
         </div>
     </div>
 
@@ -46,13 +50,6 @@
         <div id="board" class="grid"></div>
         <div id="timer" style="font-weight: bold; font-size: 1.2em; margin: 10px;">Timer: --</div>
         <button onclick="restartGame()">Restart</button>
-        <ul id="chatMessages" style="list-style:none;"></ul>
-        <input type="text" id="chatInput" placeholder="Type message" disabled>
-        <button onclick="sendChat()" id="chatButton" disabled>Send</button>
-
-        <div id="status">Waiting for opponent...</div>
-        <div id="board" class="grid"></div>
-
     </div>
 
     <script src="/socket.io/socket.io.js"></script>
