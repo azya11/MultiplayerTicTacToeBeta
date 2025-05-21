@@ -20,6 +20,29 @@
             <button onclick="logout()" id="logoutButton" style="display: none;">Logout</button>
         </div>
 
+        <!-- Game & Chat Section -->
+        <div id="main-box" class="main-box">
+            <div class="main-content">
+                <h1>Multiplayer Tic-Tac-Toe</h1>
+
+                <div id="players"></div>
+
+                <div>
+                    <button onclick="createRoom()">Create Room</button>
+                    <input type="text" id="roomCodeInput" placeholder="Enter Room Code">
+                    <button onclick="joinRoom()">Join Room</button>
+                </div>
+
+                <div id="status" style="display:none;">Waiting for opponent...</div>
+                <div id="board" class="grid"></div>
+                <div id="timerContainer" style="display:none;">
+                    <div id="timer" style="font-weight: bold; font-size: 1.2em; margin: 10px;">Timer: --</div>
+                    <button onclick="restartGame()">Restart</button>
+                </div>
+
+            </div>
+        </div>
+
         <!-- Friends Section -->
         <div id="friends-box" class="box">
             <h3>Friends</h3>
@@ -34,26 +57,8 @@
         </div>
     </div>
 
-    <!-- Game & Chat Section -->
-    <div class="main-content">
-        <h1>Multiplayer Tic-Tac-Toe</h1>
-
-        <div id="players"></div>
-
-        <div>
-            <button onclick="createRoom()">Create Room</button>
-            <input type="text" id="roomCodeInput" placeholder="Enter Room Code">
-            <button onclick="joinRoom()">Join Room</button>
-        </div>
-
-        <div id="status" style="display:none;">Waiting for opponent...</div>
-        <div id="board" class="grid"></div>
-        <div id="timerContainer" style="display:none;">
-            <div id="timer" style="font-weight: bold; font-size: 1.2em; margin: 10px;">Timer: --</div>
-            <button onclick="restartGame()">Restart</button>
-        </div>
-        
-    </div>
+    
+    
 
     <script src="/socket.io/socket.io.js"></script>
     <script src="script.js"></script>
