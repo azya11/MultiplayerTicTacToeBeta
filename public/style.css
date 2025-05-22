@@ -1,97 +1,108 @@
+/* General layout and background */
 body {
     margin: 0;
     padding: 0;
-    font-family: Arial, sans-serif;
-    background: #f0f0f0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #0b1f3a; /* Dark blue background */
+    color: #f0f4f8;
 }
 
+/* Layout of top sections */
 .top-bar {
     display: flex;
     justify-content: space-between;
-    padding: 10px 20px;
-}
-
-.box {
-    background: #fff;
-    padding: 12px;
-    border: 1px solid #ccc;
-    width: 260px;
-    min-height: 150px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-}
-.main-box {
-    width: 400px;
     padding: 20px;
-    background: white;
-    border: 2px solid #ccc;
+}
+
+/* Common styled box */
+.box {
+    background: #1e3a5f; /* Light blue box */
+    padding: 16px;
     border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+    width: 260px;
+    color: white;
+}
+
+/* Game box in the center */
+.main-box {
+    width: 420px;
+    padding: 24px;
+    background: #1e3a5f;
+    border-radius: 12px;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.4);
     text-align: center;
-    margin: 20px auto;
+    color: white;
 }
 
+/* Tic-Tac-Toe grid */
 .grid {
     display: grid;
     grid-template-columns: repeat(3, 100px);
-    gap: 5px;
+    gap: 6px;
     justify-content: center;
-    margin-top: 20px;
-}
-.main-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 20px;
-}
-
-h1, h2, h3 {
-    margin: 10px 0;
-}
-
-.grid {
-    display: grid;
-    grid-template-columns: repeat(3, 100px);
-    gap: 5px;
     margin: 20px 0;
 }
 
+/* Grid cells */
 .cell {
     width: 100px;
     height: 100px;
-    background: #eee;
+    background: #e0f0ff;
+    color: #0b1f3a;
     font-size: 2.5em;
+    font-weight: bold;
     text-align: center;
     line-height: 100px;
     cursor: pointer;
-    border: 2px solid #333;
+    border: 2px solid #0b1f3a;
     user-select: none;
+    border-radius: 6px;
 }
 
+/* Buttons */
 button {
-    margin: 5px 4px;
-    padding: 6px 12px;
+    margin: 6px 4px;
+    padding: 8px 14px;
     font-size: 1rem;
+    border: none;
+    border-radius: 6px;
     cursor: pointer;
+    background-color: #3498db;
+    color: white;
+    transition: background-color 0.2s;
 }
 
+    button:hover {
+        background-color: #2980b9;
+    }
+
+/* Status display */
 #status, #players {
     font-weight: bold;
     margin: 10px 0;
+    color: #dfefff;
 }
 
+/* Chat messages */
 #chatMessages {
     max-height: 200px;
     overflow-y: auto;
-    width: 300px;
-    padding-left: 10px;
+    width: 100%;
+    padding: 10px;
     border: 1px solid #ccc;
-    background: #fff;
+    background: #ffffff11;
+    border-radius: 6px;
     margin: 10px 0;
+    color: #e6f1ff;
 }
 
+/* Chat input */
 #chatInput {
     width: 200px;
-    padding: 5px;
+    padding: 6px;
+    border-radius: 6px;
+    border: none;
 }
 
 ul {
